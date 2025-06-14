@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zukisa Mkhize | Applied Mathematics & AI/ML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #f1c40f;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --section-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 8rem 10% 6rem;
+            background-color: var(--section-bg);
+            border-bottom: 1px solid var(--border-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        #hero .section-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        #hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            opacity: 0;
+            animation: fadeInDown 1s 0.3s forwards;
+        }
+        
+        #hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s 0.6s forwards;
+        }
+        
+        /* Education Section */
+        .education-item {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--accent);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .education-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .education-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .date {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .modules {
+            margin-top: 1.5rem;
+        }
+        
+        .modules h4 {
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .modules ul {
+            list-style-position: inside;
+            columns: 2;
+        }
+        
+        .modules li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid var(--border-color);
+        }
+        
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background: var(--light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 10%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            section {
+                padding: 6rem 5% 4rem;
+            }
+            
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            #hero p {
+                font-size: 1.2rem;
+            }
+            
+            .modules ul {
+                columns: 1;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">Zukisa Mkhize</a>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="section-container">
+            <h1 class="animate__animated">Zukisa Mkhize</h1>
+            <p>BSc Honours in Applied Mathematics | AI/ML Researcher | Financial Systems Analyst</p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">About Me</h2>
+            <p>I am a BSc Honours student in Applied Mathematics at Stellenbosch University, specializing in nonlinear dynamics and chaos theory with applications to financial systems. My coursework and research have equipped me with advanced skills in data analysis, numerical simulations, and stochastic modeling.</p>
+        </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education">
+        <div class="section-container">
+            <h2 class="section-title">Education</h2>
+            
+            <div class="education-item">
+                <h3>Stellenbosch University</h3>
+                <span class="date">2024 - Present</span>
+                <p>BSc Honours in Applied Mathematics</p>
+                <div class="modules">
+                    <h4>Key Modules:</h4>
+                    <ul>
+                        <li>Graph Theory</li>
+                        <li>Numerical Methods</li>
+                        <li>Stochastic Simulations</li>
+                        <li>Machine Learning</li>
+                        <li>Continuum Mechanics</li>
+                        <li>Analytical Methods</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="education-item">
+                <h3>Stellenbosch University</h3>
+                <span class="date">2020 - 2023</span>
+                <p>BSc in Laser Physics</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-container">
+            <h2 class="section-title">Projects</h2>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        [Financial Charts]
+                    </div>
+                    <div class="project-content">
+                        <h3>Financial Market Chaos Detection</h3>
+                        <p>Applying chaos theory and machine learning to detect patterns in financial time series data.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Chaos Theory</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        [Physics Diagram]
+                    </div>
+                    <div class="project-content">
+                        <h3>2D Ising Model Simulation</h3>
+                        <p>Simulated phase transitions in magnetic systems using the Metropolis algorithm.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">C</span>
+                            <span class="tag">Monte Carlo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        [Random Walk Visualization]
+                    </div>
+                    <div class="project-content">
+                        <h3>Random Walk Analysis</h3>
+                        <p>Statistical analysis of random walks using Monte Carlo methods and probability theory.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Statistics</span>
+                            <span class="tag">Data Visualization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p>I'm currently looking for opportunities in AI/ML and quantitative finance. Feel free to reach out!</p>
+            <p>Email: zukisamkhize144@gmail.com</p>
+            <p>Phone: +27660903659</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Zukisa Mkhize</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="copyright">&copy; 2024 Zukisa Mkhize. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    
+    <script>
+        // Scroll animation for elements
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.education-item, .project-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if(elementPosition < screenPosition) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
