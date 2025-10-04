@@ -1,20 +1,26 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zukisa Mkhize | Applied Mathematics & AI/ML</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React Libraries -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel to transpile JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
+        /* --- Dark & Purple Theme --- */
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #f1c40f;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --section-bg: #ffffff;
-            --border-color: #e0e0e0;
+            --primary: #0f172a; /* Slate 900 */
+            --secondary: #1e293b; /* Slate 800 */
+            --accent: #8b5cf6; /* Purple 500 */
+            --light: #f1f5f9; /* Slate 100 */
+            --text-color: #cbd5e1; /* Slate 300 */
+            --border-color: #334155; /* Slate 700 */
         }
         
         * {
@@ -26,21 +32,27 @@
         body {
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: #f9f9f9;
+            color: var(--text-color);
+            background-color: var(--primary);
         }
         
         h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
+            color: var(--light);
+        }
+
+        a {
+            transition: color 0.3s;
         }
         
         /* Header Styles */
         header {
             position: fixed;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
             z-index: 1000;
             padding: 1rem 10%;
             display: flex;
@@ -52,7 +64,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--light);
             text-decoration: none;
         }
         
@@ -67,26 +79,21 @@
         
         nav ul li a {
             text-decoration: none;
-            color: var(--primary);
+            color: var(--text-color);
             font-weight: 600;
-            transition: color 0.3s;
         }
         
         nav ul li a:hover {
-            color: var(--secondary);
+            color: var(--accent);
         }
         
         /* Section Styles */
         section {
             padding: 8rem 10% 6rem;
-            background-color: var(--section-bg);
             border-bottom: 1px solid var(--border-color);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
-        
+
         .section-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -95,7 +102,6 @@
         .section-title {
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: var(--primary);
             position: relative;
             padding-bottom: 1rem;
         }
@@ -112,23 +118,38 @@
         
         /* Hero Section */
         #hero {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        #hero .section-container {
+            padding: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #pendulum-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
         }
         
         #hero h1 {
             font-size: 4rem;
             margin-bottom: 1.5rem;
-            color: var(--primary);
+            color: var(--light);
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
             opacity: 0;
             animation: fadeInDown 1s 0.3s forwards;
         }
@@ -136,7 +157,7 @@
         #hero p {
             font-size: 1.5rem;
             max-width: 700px;
-            margin-bottom: 2rem;
+            color: #d1d5db; /* Gray 300 */
             opacity: 0;
             animation: fadeIn 1s 0.6s forwards;
         }
@@ -145,9 +166,9 @@
         .education-item {
             margin-bottom: 3rem;
             padding: 2rem;
-            background: white;
+            background: var(--secondary);
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             border-left: 4px solid var(--accent);
             opacity: 0;
             transform: translateY(20px);
@@ -161,33 +182,20 @@
         
         .education-item h3 {
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--light);
         }
         
         .date {
-            color: #666;
+            color: #94a3b8; /* Slate 400 */
             font-style: italic;
             margin-bottom: 1rem;
             display: block;
         }
         
-        .modules {
-            margin-top: 1.5rem;
-        }
-        
-        .modules h4 {
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-        }
-        
-        .modules ul {
-            list-style-position: inside;
-            columns: 2;
-        }
-        
-        .modules li {
-            margin-bottom: 0.5rem;
-        }
+        .modules { margin-top: 1.5rem; }
+        .modules h4 { margin-bottom: 0.8rem; }
+        .modules ul { list-style-position: inside; columns: 2; }
+        .modules li { margin-bottom: 0.5rem; }
         
         /* Projects Grid */
         .projects-grid {
@@ -198,29 +206,22 @@
         }
         
         .project-card {
-            background: white;
+            background: var(--secondary);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            text-decoration: none; /* Removes underline from links */
-            color: inherit; /* Makes link text color same as normal text */
+            text-decoration: none;
+            color: inherit;
         }
         
-        .project-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
+        .project-card.visible { opacity: 1; transform: translateY(0); }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.25); }
         
         .project-image img {
             width: 100%;
@@ -229,135 +230,40 @@
             border-bottom: 1px solid var(--border-color);
         }
         
-        .project-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
+        .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-content h3 { margin-bottom: 0.8rem; }
+        .project-content p { flex-grow: 1; }
         
-        .project-content h3 {
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-        }
-
-        .project-content p {
-            flex-grow: 1;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 1rem;
-        }
-        
-        .tag {
-            background: var(--light);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--primary);
-        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+        .tag { background: #334155; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--light); }
         
         /* Footer Styles */
-        footer {
-            background-color: var(--primary);
-            color: white;
-            padding: 3rem 10%;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
+        footer { background-color: #0f172a; color: var(--light); padding: 3rem 10%; text-align: center; border-top: 1px solid var(--border-color); }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        .social-links { display: flex; gap: 1.5rem; margin: 1.5rem 0; }
+        .social-links a { color: var(--light); font-size: 1.5rem; transition: color 0.3s; }
+        .social-links a:hover { color: var(--accent); }
+        .copyright { margin-top: 1.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem; }
         
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--accent);
-        }
-        
-        .copyright {
-            margin-top: 1.5rem;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Responsive Design */
         @media (max-width: 768px) {
-            header {
-                padding: 1rem 5%;
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-            }
-            
-            nav ul li {
-                margin-left: 1rem;
-                margin-right: 1rem;
-            }
-            
-            section {
-                padding: 6rem 5% 4rem;
-            }
-            
-            #hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            #hero p {
-                font-size: 1.2rem;
-            }
-            
-            .modules ul {
-                columns: 1;
-            }
-            
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
+            header { padding: 1rem 5%; flex-direction: column; text-align: center; }
+            nav ul { margin-top: 1rem; }
+            nav ul li { margin: 0 1rem; }
+            section { padding: 6rem 5% 4rem; }
+            #hero h1 { font-size: 2.5rem; }
+            #hero p { font-size: 1.2rem; }
+            .modules ul { columns: 1; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <a href="#" class="logo">Zukisa Mkhize</a>
+        <a href="#hero" class="logo">Zukisa Mkhize</a>
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
@@ -368,27 +274,31 @@
         </nav>
     </header>
     
+    <!-- Hero Section -->
     <section id="hero">
-        <div class="section-container">
+        <div id="pendulum-container"></div>
+        <div class="hero-content">
             <h1 class="animate__animated">Zukisa Mkhize</h1>
             <p>BSc Honours in Applied Mathematics | BSc Physics</p>
         </div>
     </section>
     
+    <!-- About Section -->
     <section id="about">
         <div class="section-container">
             <h2 class="section-title">About Me</h2>
-            <p>I am a BSc Honours student in Applied Mathematics at Stellenbosch University, specializing in nonlinear dynamics and chaos theory with applications to financial systems. My coursework and research have equipped me with advanced skills in data analysis, numerical simulations, and stochastic modeling.</p>
+            <p>I am a BSc Honours student in Applied Mathematics at Stellenbosch University, with a keen interest in chaos theory and nonlinear dynamics, especially their applications to financial systems. My coursework and research have equipped me with advanced skills in data analysis, numerical simulations, and stochastic modeling.</p>
         </div>
     </section>
     
+    <!-- Education Section -->
     <section id="education">
         <div class="section-container">
             <h2 class="section-title">Education</h2>
             
             <div class="education-item">
                 <h3>Stellenbosch University</h3>
-                <span class="date">2025 - Present</span>
+                <span class="date">2024 - Present</span>
                 <p>BSc Honours in Applied Mathematics</p>
                 <div class="modules">
                     <h4>Key Modules:</h4>
@@ -405,82 +315,63 @@
             
             <div class="education-item">
                 <h3>Stellenbosch University</h3>
-                <span class="date">2021 - 2024</span>
+                <span class="date">2020 - 2023</span>
                 <p>BSc in Laser Physics</p>
             </div>
         </div>
     </section>
     
+    <!-- Projects Section -->
     <section id="projects">
         <div class="section-container">
             <h2 class="section-title">Projects</h2>
-            <p>Explore some of my recent work in applied mathematics and simulation. For more details, click any card to visit the project's GitHub repository.</p>
+            <p>Explore some of my recent work. Click any card to visit the project's GitHub repository.</p>
             
             <div class="projects-grid">
-                
+                <!-- Project 1: Markov Process -->
                 <a href="https://github.com/Zukisa313/Continous-Time-Markov-Chain" target="_blank" class="project-card">
-                    <div class="project-image">
-                        <img src="images/MarkovContinous.png" alt="Markov Process Simulation">
-                    </div>
+                    <div class="project-image"><img src="images/MarkovContinous.png" alt="Markov Process Simulation"></div>
                     <div class="project-content">
                         <h3>Markov Process Simulations</h3>
                         <p>Simulated and analyzed Poisson and Birth-Death processes using both discretized-time and random-jump-time (Gillespie) methods.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Stochastic Simulation</span>
-                            <span class="tag">NumPy</span>
-                        </div>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Stochastic Simulation</span></div>
                     </div>
                 </a>
                 
+                <!-- Project 2: Geometric Random Walk -->
                 <a href="https://github.com/Zukisa313/GeometricRandomWalk" target="_blank" class="project-card">
-                    <div class="project-image">
-                        <img src="images/MonteCarlo.jpg" alt="Geometric Random Walk Simulation">
-                    </div>
+                    <div class="project-image"><img src="images/MonteCarlo.jpg" alt="Geometric Random Walk Simulation"></div>
                     <div class="project-content">
                         <h3>Geometric Random Walk for Stock Prices</h3>
                         <p>Modeled AAPL stock prices using a Geometric Random Walk, performing Monte Carlo simulations to forecast potential price paths.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Finance</span>
-                            <span class="tag">Monte Carlo</span>
-                        </div>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Finance</span><span class="tag">Monte Carlo</span></div>
                     </div>
                 </a>
                 
+                <!-- Project 3: Graph Theory -->
                 <a href="https://github.com/Zukisa313/Graph-Theory-Correlation-Of-Stocks" target="_blank" class="project-card">
-                    <div class="project-image">
-                        <img src="images/CorrelationGraph.png" alt="Stock Correlation Network">
-                    </div>
+                    <div class="project-image"><img src="images/CorrelationGraph.png" alt="Stock Correlation Network"></div>
                     <div class="project-content">
                         <h3>Stock Market Correlation Network</h3>
                         <p>Applied graph theory to visualize correlations between major tech stocks, creating a network to identify market clusters.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Graph Theory</span>
-                            <span class="tag">NetworkX</span>
-                        </div>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Graph Theory</span><span class="tag">NetworkX</span></div>
                     </div>
                 </a>
                 
+                <!-- Project 4: Computer Vision -->
                 <a href="https://github.com/Zukisa313/" target="_blank" class="project-card">
-                    <div class="project-image">
-                        <img src="images/cv_placeholder.png" alt="Computer Vision Project">
-                    </div>
+                    <div class="project-image"><img src="images/cv_placeholder.png" alt="Computer Vision Project"></div>
                     <div class="project-content">
                         <h3>Computer Vision: Scene Classification</h3>
                         <p>Developed a model to differentiate between various scenes (e.g., forest, city) using a Bag-of-Visual-Words approach and an SVM classifier.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">Computer Vision</span>
-                        </div>
+                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Computer Vision</span></div>
                     </div>
                 </a>
             </div>
         </div>
     </section>
     
+    <!-- Contact Section -->
     <section id="contact">
         <div class="section-container">
             <h2 class="section-title">Get In Touch</h2>
@@ -490,6 +381,7 @@
         </div>
     </section>
     
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <h3>Zukisa Mkhize</h3>
@@ -502,36 +394,156 @@
         </div>
     </footer>
 
+    <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     
-    <script>
-        // Scroll animation for elements
+    <!-- Main Script for animations and React component -->
+    <script type="text/babel">
+        // --- React Double Pendulum Component ---
+        const { useState, useEffect, useRef } = React;
+
+        const DoublePendulum = () => {
+          const canvasRef = useRef(null);
+          const animationRef = useRef(null);
+          const [isRunning, setIsRunning] = useState(true);
+
+          useEffect(() => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            let angle1 = Math.PI / 2;
+            let angle2 = Math.PI / 2;
+            let vel1 = 0;
+            let vel2 = 0;
+            const length1 = 150;
+            const length2 = 150;
+            const mass1 = 10;
+            const mass2 = 10;
+            const g = 1;
+            const trail = [];
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 3;
+
+            const animate = () => {
+              if (!isRunning) {
+                animationRef.current = requestAnimationFrame(animate);
+                return;
+              }
+
+              ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              // Physics Calculations
+              const num1 = -g * (2 * mass1 + mass2) * Math.sin(angle1);
+              const num2 = -mass2 * g * Math.sin(angle1 - 2 * angle2);
+              const num3 = -2 * Math.sin(angle1 - angle2) * mass2;
+              const num4 = vel2 * vel2 * length2 + vel1 * vel1 * length1 * Math.cos(angle1 - angle2);
+              const den = length1 * (2 * mass1 + mass2 - mass2 * Math.cos(2 * angle1 - 2 * angle2));
+              const acc1 = (num1 + num2 + num3 * num4) / den;
+
+              const num5 = 2 * Math.sin(angle1 - angle2);
+              const num6 = vel1 * vel1 * length1 * (mass1 + mass2);
+              const num7 = g * (mass1 + mass2) * Math.cos(angle1);
+              const num8 = vel2 * vel2 * length2 * mass2 * Math.cos(angle1 - angle2);
+              const den2 = length2 * (2 * mass1 + mass2 - mass2 * Math.cos(2 * angle1 - 2 * angle2));
+              const acc2 = (num5 * (num6 + num7 + num8)) / den2;
+
+              vel1 += acc1;
+              vel2 += acc2;
+              angle1 += vel1;
+              angle2 += vel2;
+              vel1 *= 0.998; // Damping
+              vel2 *= 0.998; // Damping
+
+              // Positions
+              const x1 = centerX + length1 * Math.sin(angle1);
+              const y1 = centerY + length1 * Math.cos(angle1);
+              const x2 = x1 + length2 * Math.sin(angle2);
+              const y2 = y1 + length2 * Math.cos(angle2);
+
+              // Trail
+              trail.push({ x: x2, y: y2 });
+              if (trail.length > 250) trail.shift();
+
+              for (let i = 1; i < trail.length; i++) {
+                const alpha = i / trail.length;
+                const hue = (i * 1.5) % 360;
+                ctx.strokeStyle = `hsla(${hue}, 80%, 70%, ${alpha * 0.7})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+                ctx.lineTo(trail[i].x, trail[i].y);
+                ctx.stroke();
+              }
+
+              // Arms
+              ctx.strokeStyle = '#8b5cf6';
+              ctx.lineWidth = 3;
+              ctx.beginPath();
+              ctx.moveTo(centerX, centerY);
+              ctx.lineTo(x1, y1);
+              ctx.lineTo(x2, y2);
+              ctx.stroke();
+
+              // Joints
+              ctx.fillStyle = '#a78bfa';
+              ctx.beginPath(); ctx.arc(centerX, centerY, 6, 0, Math.PI * 2); ctx.fill();
+              ctx.beginPath(); ctx.arc(x1, y1, 10, 0, Math.PI * 2); ctx.fill();
+              ctx.beginPath(); ctx.arc(x2, y2, 10, 0, Math.PI * 2); ctx.fill();
+
+              animationRef.current = requestAnimationFrame(animate);
+            };
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            animate();
+
+            return () => {
+              if (animationRef.current) cancelAnimationFrame(animationRef.current);
+            };
+          }, [isRunning]);
+
+          return (
+            <div className="w-full h-full relative">
+              <canvas ref={canvasRef} className="w-full h-full" />
+              <button
+                onClick={() => setIsRunning(!isRunning)}
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition z-10"
+              >
+                {isRunning ? 'Pause' : 'Resume'}
+              </button>
+            </div>
+          );
+        };
+        
+        // --- Site-wide animations and scrolling ---
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.education-item, .project-card');
-            
             elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
-                if(elementPosition < screenPosition) {
+                if (element.getBoundingClientRect().top < window.innerHeight / 1.2) {
                     element.classList.add('visible');
                 }
             });
         };
         
-        // Smooth scrolling for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
+        document.querySelectorAll('nav a, .logo').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
             });
         });
         
-        // Run on load and scroll
         window.addEventListener('load', animateOnScroll);
         window.addEventListener('scroll', animateOnScroll);
+
+        // Render the React component
+        ReactDOM.render(<DoublePendulum />, document.getElementById('pendulum-container'));
     </script>
 </body>
 </html>
+
