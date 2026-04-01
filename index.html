@@ -1,567 +1,943 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zukisa Mkhize | Applied Mathematics & AI/ML</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React Libraries -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <!-- Babel to transpile JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <style>
-        /* --- Dark & Purple Theme --- */
-        :root {
-            --primary: #0f172a; /* Slate 900 */
-            --secondary: #1e293b; /* Slate 800 */
-            --accent: #8b5cf6; /* Purple 500 */
-            --light: #f1f5f9; /* Slate 100 */
-            --text-color: #cbd5e1; /* Slate 300 */
-            --border-color: #334155; /* Slate 700 */
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--primary);
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: var(--light);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zukisa | Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        a {
-            transition: color 0.3s;
-        }
-        
-        /* Header Styles */
-        header {
-            position: fixed;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            padding: 1rem 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--light);
-            text-decoration: none;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
-        }
-        
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-        
-        /* Section Styles */
-        section {
-            padding: 8rem 10% 6rem;
-            border-bottom: 1px solid var(--border-color);
-            min-height: 100vh;
-        }
+  :root {
+    --ink: #0e0e10;
+    --paper: #f5f2ec;
+    --accent: #c8501a;
+    --accent2: #1a6bc8;
+    --muted: #7a7068;
+    --card-bg: #ffffff;
+    --nav-h: 64px;
+  }
 
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--accent);
-        }
-        
-        /* Hero Section */
-        #hero {
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-        }
+  html { scroll-behavior: smooth; }
 
-        #pendulum-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            pointer-events: none;
-        }
-        
-        #hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
-            opacity: 0;
-            animation: fadeInDown 1s 0.3s forwards;
-        }
-        
-        #hero p {
-            font-size: 1.5rem;
-            max-width: 700px;
-            color: #d1d5db; /* Gray 300 */
-            opacity: 0;
-            animation: fadeIn 1s 0.6s forwards;
-        }
-        
-        /* Education Section */
-        .education-item {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: var(--secondary);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border-left: 4px solid var(--accent);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-        
-        .education-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .education-item h3 {
-            margin-bottom: 0.5rem;
-            color: var(--light);
-        }
-        
-        .date {
-            color: #94a3b8; /* Slate 400 */
-            font-style: italic;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .modules { margin-top: 1.5rem; }
-        .modules h4 { margin-bottom: 0.8rem; }
-        .modules ul { list-style-position: inside; columns: 2; }
-        .modules li { margin-bottom: 0.5rem; }
-        
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 2rem;
-        }
-        
-        .project-card {
-            background: var(--secondary);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .project-card.visible { opacity: 1; transform: translateY(0); }
-        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.25); }
-        
-        .project-image img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .project-content h3 { margin-bottom: 0.8rem; }
-        .project-content p { flex-grow: 1; }
-        
-        .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
-        .tag { background: #334155; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--light); }
-        
-        /* Footer Styles */
-        footer { background-color: #0f172a; color: var(--light); padding: 3rem 10%; text-align: center; border-top: 1px solid var(--border-color); }
-        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        .social-links { display: flex; gap: 1.5rem; margin: 1.5rem 0; }
-        .social-links a { color: var(--light); font-size: 1.5rem; transition: color 0.3s; }
-        .social-links a:hover { color: var(--accent); }
-        .copyright { margin-top: 1.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        @media (max-width: 768px) {
-            header { padding: 1rem 5%; flex-direction: column; text-align: center; }
-            nav ul { margin-top: 1rem; }
-            nav ul li { margin: 0 1rem; }
-            section { padding: 6rem 5% 4rem; }
-            #hero h1 { font-size: 2.5rem; }
-            #hero p { font-size: 1.2rem; }
-            .modules ul { columns: 1; }
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: rgba(245,242,236,0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(14,14,16,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    z-index: 1000;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--accent);
+    transition: width 0.25s ease;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: calc(var(--nav-h) + 4rem) clamp(1.5rem, 8vw, 7rem) 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* grid texture */
+  #home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(14,14,16,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,14,16,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.6rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 28px; height: 1.5px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 2.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s ease forwards;
+  }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s ease forwards;
+  }
+
+  .chip {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(14,14,16,0.16);
+    border-radius: 100px;
+    color: var(--muted);
+    background: transparent;
+    transition: all 0.2s;
+  }
+
+  .chip:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s, transform 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s ease forwards;
+  }
+
+  .hero-cta:hover { background: var(--accent); transform: translateY(-2px); }
+
+  .hero-cta svg { transition: transform 0.2s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  /* large decorative number */
+  .hero-deco {
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(8rem, 20vw, 18rem);
+    color: rgba(200,80,26,0.06);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { scroll-margin-top: var(--nav-h); }
+
+  .section-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,80,26,0.25);
+  }
+
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--ink); }
+
+  #about .section-label { color: var(--accent); }
+  #about .section-label::after { background: rgba(200,80,26,0.35); }
+  #about .section-heading { color: var(--paper); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+  .about-text p {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: rgba(245,242,236,0.72);
+    margin-bottom: 1.2rem;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    border: 1px solid rgba(245,242,236,0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: rgba(245,242,236,0.04);
+    transition: background 0.25s;
+  }
+
+  .stat-card:hover { background: rgba(245,242,236,0.08); }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(245,242,236,0.45);
+  }
+
+  .skills-row {
+    margin-top: 2.5rem;
+    grid-column: 1 / -1;
+  }
+
+  .skills-row h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,242,236,0.4);
+    margin-bottom: 1rem;
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-pill {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid rgba(245,242,236,0.15);
+    border-radius: 100px;
+    color: rgba(245,242,236,0.6);
+    background: transparent;
+    transition: all 0.2s;
+  }
+
+  .skill-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--paper); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(14,14,16,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(14,14,16,0.12);
+  }
+
+  .project-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    cursor: pointer;
+    background: var(--ink);
+  }
+
+  .project-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s;
+  }
+
+  .project-img-wrap:hover img { transform: scale(1.04); opacity: 0.85; }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(14,14,16,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .project-img-wrap:hover .project-overlay { opacity: 1; }
+
+  .overlay-icon {
+    width: 44px; height: 44px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+
+  .project-img-wrap:hover .overlay-icon { transform: scale(1.1); }
+
+  .overlay-text {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,242,236,0.8);
+    font-weight: 500;
+  }
+
+  .project-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.8rem;
+    line-height: 1.75;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .project-link {
+    margin-top: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+    align-self: flex-start;
+  }
+
+  .project-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── SVG ILLUSTRATIONS for project thumbnails ── */
+  .thumb-svg {
+    width: 100%; height: 100%;
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(245,242,236,0.4);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* intersection observer reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* stagger children */
+  .stagger .reveal:nth-child(1) { transition-delay: 0s; }
+  .stagger .reveal:nth-child(2) { transition-delay: 0.1s; }
+  .stagger .reveal:nth-child(3) { transition-delay: 0.2s; }
+  .stagger .reveal:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(14,14,16,0.08);
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE NAV ── */
+  @media (max-width: 540px) {
+    .nav-links { gap: 1.4rem; }
+    .nav-links a { font-size: 0.68rem; }
+  }
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <a href="#hero" class="logo">Zukisa Mkhize</a>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <!-- Hero Section -->
-    <section id="hero">
-        <div id="pendulum-container"></div>
-        <div class="hero-content">
-            <h1 class="animate__animated">Zukisa Mkhize</h1>
-            <p>BSc Honours in Applied Mathematics | BSc Physics</p>
-        </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about">
-        <div class="section-container">
-            <h2 class="section-title">About Me</h2>
-            <p>I am a BSc Honours student in Applied Mathematics at Stellenbosch University, with a keen interest in chaos theory and nonlinear dynamics, especially their applications to financial systems. My coursework and research have equipped me with advanced skills in data analysis, numerical simulations, and stochastic modeling.</p>
-        </div>
-    </section>
-    
-    <!-- Education Section -->
-    <section id="education">
-        <div class="section-container">
-            <h2 class="section-title">Education</h2>
-            
-            <div class="education-item">
-                <h3>Stellenbosch University</h3>
-                <span class="date">2024 - Present</span>
-                <p>BSc Honours in Applied Mathematics</p>
-                <div class="modules">
-                    <h4>Key Modules:</h4>
-                    <ul>
-                        <li>Graph Theory</li>
-                        <li>Numerical Methods</li>
-                        <li>Stochastic Simulations</li>
-                        <li>Machine Learning</li>
-                        <li>Markov Process</li>
-                        <li>Computer Vision</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="education-item">
-                <h3>Stellenbosch University</h3>
-                <span class="date">2020 - 2023</span>
-                <p>BSc in Laser Physics</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="section-container">
-            <h2 class="section-title">Projects</h2>
-            <p>Explore some of my recent work. Click any card to visit the project's GitHub repository.</p>
-            
-            <div class="projects-grid">
-                <!-- Project 1: Markov Process -->
-                <a href="https://github.com/Zukisa313/Continous-Time-Markov-Chain" target="_blank" class="project-card">
-                    <div class="project-image"><img src="images/MarkovContinous.png" alt="Markov Process Simulation"></div>
-                    <div class="project-content">
-                        <h3>Markov Process Simulations</h3>
-                        <p>Simulated and analyzed Poisson and Birth-Death processes using both discretized-time and random-jump-time (Gillespie) methods.</p>
-                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Stochastic Simulation</span></div>
-                    </div>
-                </a>
-                
-                <!-- Project 2: Geometric Random Walk -->
-                <a href="https://github.com/Zukisa313/GeometricRandomWalk" target="_blank" class="project-card">
-                    <div class="project-image"><img src="images/MonteCarlo.jpg" alt="Geometric Random Walk Simulation"></div>
-                    <div class="project-content">
-                        <h3>Geometric Random Walk for Stock Prices</h3>
-                        <p>Modeled AAPL stock prices using a Geometric Random Walk, performing Monte Carlo simulations to forecast potential price paths.</p>
-                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Finance</span><span class="tag">Monte Carlo</span></div>
-                    </div>
-                </a>
-                
-                <!-- Project 3: Graph Theory -->
-                <a href="https://github.com/Zukisa313/Graph-Theory-Correlation-Of-Stocks" target="_blank" class="project-card">
-                    <div class="project-image"><img src="images/CorrelationGraph.png" alt="Stock Correlation Network"></div>
-                    <div class="project-content">
-                        <h3>Stock Market Correlation Network</h3>
-                        <p>Applied graph theory to visualize correlations between major tech stocks, creating a network to identify market clusters.</p>
-                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Graph Theory</span><span class="tag">NetworkX</span></div>
-                    </div>
-                </a>
-                
-                <!-- Project 4: Computer Vision -->
-                <a href="https://github.com/Zukisa313/" target="_blank" class="project-card">
-                    <div class="project-image"><img src="images/kNNclassification.png" alt="Computer Vision Project"></div>
-                    <div class="project-content">
-                        <h3>Computer Vision: Scene Classification</h3>
-                        <p>Developed a model to differentiate between various scenes (e.g., forest, city) using a Bag-of-Visual-Words approach and an SVM classifier.</p>
-                        <div class="project-tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Computer Vision</span></div>
-                    </div>
-                </a>
 
-                <!-- Project 5: Custom CNN for Scene Classification -->
-<a href="https://github.com/Zukisa313/SceneClassifier" target="https://github.com/Zukisa313/SceneClassifier" class="project-card">
-    <div class="project-image"><img src="images/office.png" alt="Custom CNN Scene Classification"></div>
-    <div class="project-content">
-        <h3>Deep Learning: Custom CNN for Scene Classification</h3>
-        <p>Built and trained a Convolutional Neural Network from scratch to classify 9 scene categories, implementing data augmentation, feature extraction, and GPU-accelerated training.</p>
-        <div class="project-tags">
-            <span class="tag">Python</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">Deep Learning</span>
-            <span class="tag">CNN</span>
-        </div>
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">ZK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Data Scientist &amp; ML Engineer</div>
+    <h1 class="hero-title">
+      Turning<br/><em>data</em> into<br/>decisions.
+    </h1>
+    <p class="hero-subtitle">
+      Physics &amp; Applied Mathematics graduate from Stellenbosch University,
+      building end-to-end machine learning systems and extracting insights
+      from complex datasets.
+    </p>
+    <div class="hero-chips">
+      <span class="chip">Machine Learning</span>
+      <span class="chip">Computer Vision</span>
+      <span class="chip">Quantitative Finance</span>
+      <span class="chip">Deep Learning</span>
+      <span class="chip">Data Analysis</span>
     </div>
-</a>
+    <a href="#projects" class="hero-cta">
+      View Projects
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <div class="hero-deco">DS</div>
+  </div>
+</section>
 
-            </div>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-label">About Me</div>
+    <h2 class="section-heading">Physics. Math.<br/>Machine Learning.</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I am a graduate from Stellenbosch University with a background in Physics and
+          Applied Mathematics, passionate about data science, machine learning, and
+          quantitative analysis. My academic training has given me strong foundations in
+          mathematical modeling, statistics, and computational methods, which I apply to
+          solving real-world problems using data.
+        </p>
+        <p>
+          I enjoy building end-to-end machine learning systems, performing exploratory data
+          analysis, and developing models that extract insights from complex datasets. My
+          projects span areas such as computer vision, predictive modeling, and financial
+          data analysis, where I combine mathematics, programming, and machine learning
+          techniques.
+        </p>
+        <p>
+          I am particularly interested in data-driven decision making, quantitative finance,
+          and scalable machine learning systems. Through continuous learning and hands-on
+          projects, I aim to develop solutions that bridge the gap between theory, data, and
+          real-world applications.
+        </p>
+
+        <div class="skill-pills" style="margin-top:2rem;">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">TensorFlow / Keras</span>
+          <span class="skill-pill">scikit-learn</span>
+          <span class="skill-pill">Pandas & NumPy</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Matplotlib / Seaborn</span>
+          <span class="skill-pill">Flask</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Statistics</span>
+          <span class="skill-pill">Linear Algebra</span>
         </div>
+      </div>
 
-        
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="section-container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p>I'm currently looking for opportunities in AI/ML and quantitative finance. Feel free to reach out!</p>
-            <p>Email: zukisamkhize144@gmail.com</p>
-            <p>Phone: +27660903659</p>
+      <div class="about-stats stagger">
+        <div class="stat-card reveal">
+          <div class="stat-num">4+</div>
+          <div class="stat-label">ML Projects</div>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <h3>Zukisa Mkhize</h3>
-            <div class="social-links">
-                <a href="https://github.com/Zukisa313" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/your-profile" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://twitter.com/your-handle" target="_blank"><i class="fab fa-twitter"></i></a>
-            </div>
-            <p class="copyright">&copy; 2024 Zukisa Mkhize. All rights reserved.</p>
+        <div class="stat-card reveal">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Degrees</div>
         </div>
-    </footer>
+        <div class="stat-card reveal">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Curiosity</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num">SU</div>
+          <div class="stat-label">Stellenbosch University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
-    <!-- Main Script for animations and React component -->
-    <script type="text/babel">
-        // --- React Double Pendulum Component ---
-        const { useState, useEffect, useRef } = React;
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-heading">Selected Projects</h2>
 
-        const DoublePendulum = () => {
-          const canvasRef = useRef(null);
-          const animationRef = useRef(null);
-          const [isRunning, setIsRunning] = useState(true);
+    <div class="projects-grid stagger">
 
-          useEffect(() => {
-            const canvas = canvasRef.current;
-            if (!canvas) return;
-
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-
-            let angle1 = Math.PI / 2;
-            let angle2 = Math.PI / 2;
-            let vel1 = 0;
-            let vel2 = 0;
-            const length1 = 150;
-            const length2 = 150;
-            const mass1 = 10;
-            const mass2 = 10;
-            const g = 1;
-            const trail = [];
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 3;
-
-            const animate = () => {
-              if (!isRunning) {
-                animationRef.current = requestAnimationFrame(animate);
-                return;
-              }
-
-              ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-              // Physics Calculations
-              const num1 = -g * (2 * mass1 + mass2) * Math.sin(angle1);
-              const num2 = -mass2 * g * Math.sin(angle1 - 2 * angle2);
-              const num3 = -2 * Math.sin(angle1 - angle2) * mass2;
-              const num4 = vel2 * vel2 * length2 + vel1 * vel1 * length1 * Math.cos(angle1 - angle2);
-              const den = length1 * (2 * mass1 + mass2 - mass2 * Math.cos(2 * angle1 - 2 * angle2));
-              const acc1 = (num1 + num2 + num3 * num4) / den;
-
-              const num5 = 2 * Math.sin(angle1 - angle2);
-              const num6 = vel1 * vel1 * length1 * (mass1 + mass2);
-              const num7 = g * (mass1 + mass2) * Math.cos(angle1);
-              const num8 = vel2 * vel2 * length2 * mass2 * Math.cos(angle1 - angle2);
-              const den2 = length2 * (2 * mass1 + mass2 - mass2 * Math.cos(2 * angle1 - 2 * angle2));
-              const acc2 = (num5 * (num6 + num7 + num8)) / den2;
-
-              vel1 += acc1;
-              vel2 += acc2;
-              angle1 += vel1;
-              angle2 += vel2;
-              vel1 *= 0.998; // Damping
-              vel2 *= 0.998; // Damping
-
-              // Positions
-              const x1 = centerX + length1 * Math.sin(angle1);
-              const y1 = centerY + length1 * Math.cos(angle1);
-              const x2 = x1 + length2 * Math.sin(angle2);
-              const y2 = y1 + length2 * Math.cos(angle2);
-
-              // Trail
-              trail.push({ x: x2, y: y2 });
-              if (trail.length > 250) trail.shift();
-
-              for (let i = 1; i < trail.length; i++) {
-                const alpha = i / trail.length;
-                const hue = (i * 1.5) % 360;
-                ctx.strokeStyle = `hsla(${hue}, 80%, 70%, ${alpha * 0.7})`;
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
-                ctx.lineTo(trail[i].x, trail[i].y);
-                ctx.stroke();
-              }
-
-              // Arms
-              ctx.strokeStyle = '#8b5cf6';
-              ctx.lineWidth = 3;
-              ctx.beginPath();
-              ctx.moveTo(centerX, centerY);
-              ctx.lineTo(x1, y1);
-              ctx.lineTo(x2, y2);
-              ctx.stroke();
-
-              // Joints
-              ctx.fillStyle = '#a78bfa';
-              ctx.beginPath(); ctx.arc(centerX, centerY, 6, 0, Math.PI * 2); ctx.fill();
-              ctx.beginPath(); ctx.arc(x1, y1, 10, 0, Math.PI * 2); ctx.fill();
-              ctx.beginPath(); ctx.arc(x2, y2, 10, 0, Math.PI * 2); ctx.fill();
-
-              animationRef.current = requestAnimationFrame(animate);
-            };
-
-            ctx.fillStyle = '#0f172a';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            animate();
-
-            return () => {
-              if (animationRef.current) cancelAnimationFrame(animationRef.current);
-            };
-          }, [isRunning]);
-
-          return (
-            <div className="w-full h-full relative">
-              <canvas ref={canvasRef} className="w-full h-full" />
-              <button
-                onClick={() => setIsRunning(!isRunning)}
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition z-10"
-              >
-                {isRunning ? 'Pause' : 'Resume'}
-              </button>
+      <!-- 1: Laptop Pricing -->
+      <article class="project-card reveal">
+        <a class="project-img-wrap"
+           href="https://github.com/Zukisa313/End-to-End-Laptop-Pricing"
+           target="_blank" rel="noopener" title="View on GitHub">
+          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="270" fill="#0e0e10"/>
+            <!-- laptop shape -->
+            <rect x="120" y="60" width="240" height="150" rx="8" fill="#1e1e24" stroke="#c8501a" stroke-width="2"/>
+            <rect x="132" y="72" width="216" height="126" rx="4" fill="#111116"/>
+            <!-- chart bars on screen -->
+            <rect x="150" y="150" width="22" height="40" rx="2" fill="#c8501a" opacity="0.85"/>
+            <rect x="182" y="125" width="22" height="65" rx="2" fill="#c8501a" opacity="0.7"/>
+            <rect x="214" y="108" width="22" height="82" rx="2" fill="#c8501a" opacity="0.9"/>
+            <rect x="246" y="135" width="22" height="55" rx="2" fill="#c8501a" opacity="0.65"/>
+            <rect x="278" y="90" width="22" height="100" rx="2" fill="#c8501a"/>
+            <!-- baseline -->
+            <line x1="140" y1="195" x2="340" y2="195" stroke="#c8501a" stroke-width="1.5" opacity="0.4"/>
+            <!-- regression line -->
+            <line x1="148" y1="168" x2="302" y2="98" stroke="#f5f2ec" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
+            <!-- base of laptop -->
+            <rect x="90" y="210" width="300" height="12" rx="4" fill="#1e1e24" stroke="#c8501a" stroke-width="1.5"/>
+            <!-- label -->
+            <text x="240" y="248" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">LAPTOP PRICING</text>
+          </svg>
+          <div class="project-overlay">
+            <div class="overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
-          );
-        };
-        
-        // --- Site-wide animations and scrolling ---
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.education-item, .project-card');
-            elements.forEach(element => {
-                if (element.getBoundingClientRect().top < window.innerHeight / 1.2) {
-                    element.classList.add('visible');
-                }
-            });
-        };
-        
-        document.querySelectorAll('nav a, .logo').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-        
-        window.addEventListener('load', animateOnScroll);
-        window.addEventListener('scroll', animateOnScroll);
+            <span class="overlay-text">View on GitHub</span>
+          </div>
+        </a>
+        <div class="project-body">
+          <div class="project-tag">Regression · End-to-End ML</div>
+          <div class="project-name">End-to-End Laptop Pricing</div>
+          <p class="project-desc">
+            A complete ML pipeline to predict laptop prices from hardware specifications.
+            Covers data preprocessing, feature engineering, model selection, and deployment.
+          </p>
+          <a class="project-link"
+             href="https://github.com/Zukisa313/End-to-End-Laptop-Pricing"
+             target="_blank" rel="noopener">
+            GitHub Repo
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </article>
 
-        // Render the React component
-        ReactDOM.render(<DoublePendulum />, document.getElementById('pendulum-container'));
-    </script>
+      <!-- 2: Churn ANN -->
+      <article class="project-card reveal">
+        <a class="project-img-wrap"
+           href="https://github.com/Zukisa313/CHURN-ANN"
+           target="_blank" rel="noopener" title="View on GitHub">
+          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="270" fill="#0e0e10"/>
+            <!-- neural network nodes -->
+            <!-- layer 1 -->
+            <circle cx="100" cy="90"  r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
+            <circle cx="100" cy="135" r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
+            <circle cx="100" cy="180" r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
+            <!-- layer 2 -->
+            <circle cx="200" cy="80"  r="16" fill="#c8501a" opacity="0.85"/>
+            <circle cx="200" cy="135" r="16" fill="#c8501a" opacity="0.6"/>
+            <circle cx="200" cy="190" r="16" fill="#c8501a" opacity="0.75"/>
+            <!-- layer 3 -->
+            <circle cx="300" cy="90"  r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
+            <circle cx="300" cy="135" r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
+            <circle cx="300" cy="180" r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
+            <!-- output -->
+            <circle cx="390" cy="135" r="18" fill="#1a6bc8" opacity="0.9"/>
+            <!-- connections l1-l2 -->
+            <line x1="116" y1="90"  x2="184" y2="80"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="90"  x2="184" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="90"  x2="184" y2="190" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="135" x2="184" y2="80"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="135" x2="184" y2="135" stroke="#c8501a" stroke-width="1.5" opacity="0.6"/>
+            <line x1="116" y1="135" x2="184" y2="190" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="180" x2="184" y2="80"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="180" x2="184" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="116" y1="180" x2="184" y2="190" stroke="#c8501a" stroke-width="1.5" opacity="0.6"/>
+            <!-- connections l2-l3 -->
+            <line x1="216" y1="80"  x2="284" y2="90"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="216" y1="80"  x2="284" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="216" y1="135" x2="284" y2="90"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="216" y1="135" x2="284" y2="135" stroke="#1a6bc8" stroke-width="1.5" opacity="0.6"/>
+            <line x1="216" y1="190" x2="284" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
+            <line x1="216" y1="190" x2="284" y2="180" stroke="#1a6bc8" stroke-width="1.5" opacity="0.6"/>
+            <!-- connections l3-out -->
+            <line x1="316" y1="90"  x2="372" y2="135" stroke="#1a6bc8" stroke-width="1.2" opacity="0.4"/>
+            <line x1="316" y1="135" x2="372" y2="135" stroke="#1a6bc8" stroke-width="2"   opacity="0.8"/>
+            <line x1="316" y1="180" x2="372" y2="135" stroke="#1a6bc8" stroke-width="1.2" opacity="0.4"/>
+            <!-- output label -->
+            <text x="390" y="139" text-anchor="middle" font-size="10" fill="#f5f2ec" font-family="monospace" font-weight="bold">0.87</text>
+            <text x="240" y="248" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">CHURN PREDICTION ANN</text>
+          </svg>
+          <div class="project-overlay">
+            <div class="overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="overlay-text">View on GitHub</span>
+          </div>
+        </a>
+        <div class="project-body">
+          <div class="project-tag">Deep Learning · Classification</div>
+          <div class="project-name">Customer Churn ANN</div>
+          <p class="project-desc">
+            Artificial neural network model to predict bank customer churn.
+            Demographic segmentation with Keras/TensorFlow, gradient descent optimization.
+          </p>
+          <a class="project-link"
+             href="https://github.com/Zukisa313/CHURN-ANN"
+             target="_blank" rel="noopener">
+            GitHub Repo
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 3: Cat-Dog -->
+      <article class="project-card reveal">
+        <a class="project-img-wrap"
+           href="https://github.com/Zukisa313/Cat-Dog-Classification"
+           target="_blank" rel="noopener" title="View on GitHub">
+          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="270" fill="#0e0e10"/>
+            <!-- left panel: cat silhouette abstract -->
+            <rect x="30" y="40" width="190" height="190" rx="6" fill="#161618"/>
+            <!-- cat shape simplified -->
+            <ellipse cx="125" cy="160" rx="52" ry="42" fill="#c8501a" opacity="0.7"/>
+            <ellipse cx="125" cy="130" rx="32" ry="30" fill="#c8501a" opacity="0.8"/>
+            <!-- ears -->
+            <polygon points="100,112 90,85 115,105" fill="#c8501a" opacity="0.9"/>
+            <polygon points="150,112 160,85 135,105" fill="#c8501a" opacity="0.9"/>
+            <!-- eyes -->
+            <ellipse cx="114" cy="125" rx="6" ry="7" fill="#0e0e10"/>
+            <ellipse cx="136" cy="125" rx="6" ry="7" fill="#0e0e10"/>
+            <circle cx="114" cy="125" r="3" fill="#f5f2ec"/>
+            <circle cx="136" cy="125" r="3" fill="#f5f2ec"/>
+            <text x="125" y="242" text-anchor="middle" font-size="9" fill="#c8501a" font-family="monospace" letter-spacing="1">CAT 94.2%</text>
+
+            <!-- right panel: dog silhouette abstract -->
+            <rect x="260" y="40" width="190" height="190" rx="6" fill="#161618"/>
+            <!-- dog shape -->
+            <ellipse cx="355" cy="160" rx="52" ry="42" fill="#1a6bc8" opacity="0.7"/>
+            <ellipse cx="355" cy="128" rx="35" ry="30" fill="#1a6bc8" opacity="0.8"/>
+            <!-- floppy ears -->
+            <ellipse cx="323" cy="130" rx="14" ry="24" fill="#1a6bc8" opacity="0.6" transform="rotate(-8,323,130)"/>
+            <ellipse cx="387" cy="130" rx="14" ry="24" fill="#1a6bc8" opacity="0.6" transform="rotate(8,387,130)"/>
+            <!-- eyes -->
+            <ellipse cx="344" cy="122" rx="6" ry="7" fill="#0e0e10"/>
+            <ellipse cx="366" cy="122" rx="6" ry="7" fill="#0e0e10"/>
+            <circle cx="344" cy="122" r="3" fill="#f5f2ec"/>
+            <circle cx="366" cy="122" r="3" fill="#f5f2ec"/>
+            <!-- nose -->
+            <ellipse cx="355" cy="138" rx="8" ry="5" fill="#0e0e10" opacity="0.6"/>
+            <text x="355" y="242" text-anchor="middle" font-size="9" fill="#1a6bc8" font-family="monospace" letter-spacing="1">DOG 5.8%</text>
+
+            <!-- CNN label -->
+            <text x="240" y="258" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">CNN CLASSIFIER</text>
+
+            <!-- vs -->
+            <text x="240" y="145" text-anchor="middle" font-size="16" fill="#f5f2ec" font-family="monospace" font-weight="bold" opacity="0.4">VS</text>
+          </svg>
+          <div class="project-overlay">
+            <div class="overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="overlay-text">View on GitHub</span>
+          </div>
+        </a>
+        <div class="project-body">
+          <div class="project-tag">Computer Vision · CNN</div>
+          <div class="project-name">Cat vs Dog Classification</div>
+          <p class="project-desc">
+            Convolutional neural network for binary image classification. Trained on
+            pet image datasets using pooling layers, dropout, and data augmentation.
+          </p>
+          <a class="project-link"
+             href="https://github.com/Zukisa313/Cat-Dog-Classification"
+             target="_blank" rel="noopener">
+            GitHub Repo
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 4: ML Techniques -->
+      <article class="project-card reveal">
+        <a class="project-img-wrap"
+           href="https://github.com/Zukisa313/Machine-Learning-Techniques"
+           target="_blank" rel="noopener" title="View on GitHub">
+          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="270" fill="#0e0e10"/>
+            <!-- scatter plot points -->
+            <circle cx="120" cy="180" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="145" cy="160" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="135" cy="145" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="160" cy="170" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="155" cy="150" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="180" cy="140" r="6" fill="#c8501a" opacity="0.9"/>
+            <circle cx="170" cy="165" r="5" fill="#c8501a" opacity="0.7"/>
+
+            <circle cx="280" cy="100" r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="310" cy="85"  r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="295" cy="110" r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="330" cy="95"  r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="315" cy="75"  r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="345" cy="100" r="6" fill="#1a6bc8" opacity="0.9"/>
+            <circle cx="300" cy="120" r="5" fill="#1a6bc8" opacity="0.7"/>
+
+            <!-- mixed middle -->
+            <circle cx="220" cy="130" r="5" fill="#c8501a" opacity="0.5"/>
+            <circle cx="235" cy="145" r="5" fill="#1a6bc8" opacity="0.5"/>
+            <circle cx="245" cy="120" r="5" fill="#c8501a" opacity="0.5"/>
+            <circle cx="210" cy="155" r="5" fill="#1a6bc8" opacity="0.5"/>
+
+            <!-- decision boundary -->
+            <line x1="60" y1="210" x2="420" y2="55" stroke="#f5f2ec" stroke-width="1.5" stroke-dasharray="8,5" opacity="0.35"/>
+
+            <!-- axes -->
+            <line x1="60" y1="220" x2="420" y2="220" stroke="#f5f2ec" stroke-width="1" opacity="0.2"/>
+            <line x1="60" y1="40"  x2="60"  y2="220" stroke="#f5f2ec" stroke-width="1" opacity="0.2"/>
+
+            <!-- SVM boundary label -->
+            <rect x="360" y="55" width="72" height="18" rx="3" fill="#c8501a" opacity="0.85"/>
+            <text x="396" y="68" text-anchor="middle" font-size="9" fill="#f5f2ec" font-family="monospace">Decision Bdry</text>
+
+            <text x="240" y="252" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">ML TECHNIQUES</text>
+          </svg>
+          <div class="project-overlay">
+            <div class="overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="overlay-text">View on GitHub</span>
+          </div>
+        </a>
+        <div class="project-body">
+          <div class="project-tag">Machine Learning · Algorithms</div>
+          <div class="project-name">Machine Learning Techniques</div>
+          <p class="project-desc">
+            A collection of fundamental ML algorithms implemented from scratch and applied
+            to real datasets — covering supervised, unsupervised, and ensemble methods.
+          </p>
+          <a class="project-link"
+             href="https://github.com/Zukisa313/Machine-Learning-Techniques"
+             target="_blank" rel="noopener">
+            GitHub Repo
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /projects-grid -->
+  </div>
+</section>
+
+<footer>
+  Built with care · <span>Zukisa</span> · Data Scientist · Stellenbosch University
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
 </body>
 </html>
-
