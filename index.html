@@ -94,7 +94,6 @@
     overflow: hidden;
   }
 
-  /* grid texture */
   #home::before {
     content: '';
     position: absolute;
@@ -206,11 +205,9 @@
   }
 
   .hero-cta:hover { background: var(--accent); transform: translateY(-2px); }
-
   .hero-cta svg { transition: transform 0.2s; }
   .hero-cta:hover svg { transform: translateX(4px); }
 
-  /* large decorative number */
   .hero-deco {
     position: absolute;
     right: -2rem;
@@ -317,21 +314,6 @@
     color: rgba(245,242,236,0.45);
   }
 
-  .skills-row {
-    margin-top: 2.5rem;
-    grid-column: 1 / -1;
-  }
-
-  .skills-row h4 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(245,242,236,0.4);
-    margin-bottom: 1rem;
-  }
-
   .skill-pills {
     display: flex;
     flex-wrap: wrap;
@@ -383,16 +365,16 @@
     aspect-ratio: 16/9;
     cursor: pointer;
     background: var(--ink);
-  }
-
-  .project-img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: cover;
     display: block;
-    transition: transform 0.4s ease, opacity 0.3s;
   }
 
-  .project-img-wrap:hover img { transform: scale(1.04); opacity: 0.85; }
+  .project-img-wrap svg {
+    width: 100%; height: 100%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .project-img-wrap:hover svg { transform: scale(1.04); }
 
   .project-overlay {
     position: absolute;
@@ -480,12 +462,6 @@
 
   .project-link:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* ── SVG ILLUSTRATIONS for project thumbnails ── */
-  .thumb-svg {
-    width: 100%; height: 100%;
-    display: block;
-  }
-
   /* ── FOOTER ── */
   footer {
     background: var(--ink);
@@ -504,7 +480,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* intersection observer reveal */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -516,21 +491,12 @@
     transform: none;
   }
 
-  /* stagger children */
   .stagger .reveal:nth-child(1) { transition-delay: 0s; }
   .stagger .reveal:nth-child(2) { transition-delay: 0.1s; }
   .stagger .reveal:nth-child(3) { transition-delay: 0.2s; }
   .stagger .reveal:nth-child(4) { transition-delay: 0.3s; }
+  .stagger .reveal:nth-child(5) { transition-delay: 0.4s; }
 
-  /* ── DIVIDER ── */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(14,14,16,0.08);
-    margin: 0;
-  }
-
-  /* ── RESPONSIVE NAV ── */
   @media (max-width: 540px) {
     .nav-links { gap: 1.4rem; }
     .nav-links a { font-size: 0.68rem; }
@@ -605,12 +571,11 @@
           projects, I aim to develop solutions that bridge the gap between theory, data, and
           real-world applications.
         </p>
-
         <div class="skill-pills" style="margin-top:2rem;">
           <span class="skill-pill">Python</span>
           <span class="skill-pill">TensorFlow / Keras</span>
           <span class="skill-pill">scikit-learn</span>
-          <span class="skill-pill">Pandas & NumPy</span>
+          <span class="skill-pill">Pandas &amp; NumPy</span>
           <span class="skill-pill">SQL</span>
           <span class="skill-pill">Matplotlib / Seaborn</span>
           <span class="skill-pill">Flask</span>
@@ -622,7 +587,7 @@
 
       <div class="about-stats stagger">
         <div class="stat-card reveal">
-          <div class="stat-num">4+</div>
+          <div class="stat-num">5+</div>
           <div class="stat-label">ML Projects</div>
         </div>
         <div class="stat-card reveal">
@@ -654,32 +619,24 @@
       <article class="project-card reveal">
         <a class="project-img-wrap"
            href="https://github.com/Zukisa313/End-to-End-Laptop-Pricing"
-           target="_blank" rel="noopener" title="View on GitHub">
-          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
             <rect width="480" height="270" fill="#0e0e10"/>
-            <!-- laptop shape -->
             <rect x="120" y="60" width="240" height="150" rx="8" fill="#1e1e24" stroke="#c8501a" stroke-width="2"/>
             <rect x="132" y="72" width="216" height="126" rx="4" fill="#111116"/>
-            <!-- chart bars on screen -->
             <rect x="150" y="150" width="22" height="40" rx="2" fill="#c8501a" opacity="0.85"/>
             <rect x="182" y="125" width="22" height="65" rx="2" fill="#c8501a" opacity="0.7"/>
             <rect x="214" y="108" width="22" height="82" rx="2" fill="#c8501a" opacity="0.9"/>
             <rect x="246" y="135" width="22" height="55" rx="2" fill="#c8501a" opacity="0.65"/>
             <rect x="278" y="90" width="22" height="100" rx="2" fill="#c8501a"/>
-            <!-- baseline -->
             <line x1="140" y1="195" x2="340" y2="195" stroke="#c8501a" stroke-width="1.5" opacity="0.4"/>
-            <!-- regression line -->
             <line x1="148" y1="168" x2="302" y2="98" stroke="#f5f2ec" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
-            <!-- base of laptop -->
             <rect x="90" y="210" width="300" height="12" rx="4" fill="#1e1e24" stroke="#c8501a" stroke-width="1.5"/>
-            <!-- label -->
             <text x="240" y="248" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">LAPTOP PRICING</text>
           </svg>
           <div class="project-overlay">
             <div class="overlay-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span class="overlay-text">View on GitHub</span>
           </div>
@@ -687,17 +644,10 @@
         <div class="project-body">
           <div class="project-tag">Regression · End-to-End ML</div>
           <div class="project-name">End-to-End Laptop Pricing</div>
-          <p class="project-desc">
-            A complete ML pipeline to predict laptop prices from hardware specifications.
-            Covers data preprocessing, feature engineering, model selection, and deployment.
-          </p>
-          <a class="project-link"
-             href="https://github.com/Zukisa313/End-to-End-Laptop-Pricing"
-             target="_blank" rel="noopener">
+          <p class="project-desc">A complete ML pipeline to predict laptop prices from hardware specifications. Covers data preprocessing, feature engineering, model selection, and deployment.</p>
+          <a class="project-link" href="https://github.com/Zukisa313/End-to-End-Laptop-Pricing" target="_blank" rel="noopener">
             GitHub Repo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </article>
@@ -706,25 +656,19 @@
       <article class="project-card reveal">
         <a class="project-img-wrap"
            href="https://github.com/Zukisa313/CHURN-ANN"
-           target="_blank" rel="noopener" title="View on GitHub">
-          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
             <rect width="480" height="270" fill="#0e0e10"/>
-            <!-- neural network nodes -->
-            <!-- layer 1 -->
             <circle cx="100" cy="90"  r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
             <circle cx="100" cy="135" r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
             <circle cx="100" cy="180" r="16" fill="none" stroke="#c8501a" stroke-width="2"/>
-            <!-- layer 2 -->
             <circle cx="200" cy="80"  r="16" fill="#c8501a" opacity="0.85"/>
             <circle cx="200" cy="135" r="16" fill="#c8501a" opacity="0.6"/>
             <circle cx="200" cy="190" r="16" fill="#c8501a" opacity="0.75"/>
-            <!-- layer 3 -->
             <circle cx="300" cy="90"  r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
             <circle cx="300" cy="135" r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
             <circle cx="300" cy="180" r="16" fill="none" stroke="#1a6bc8" stroke-width="2"/>
-            <!-- output -->
             <circle cx="390" cy="135" r="18" fill="#1a6bc8" opacity="0.9"/>
-            <!-- connections l1-l2 -->
             <line x1="116" y1="90"  x2="184" y2="80"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="116" y1="90"  x2="184" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="116" y1="90"  x2="184" y2="190" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
@@ -734,26 +678,21 @@
             <line x1="116" y1="180" x2="184" y2="80"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="116" y1="180" x2="184" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="116" y1="180" x2="184" y2="190" stroke="#c8501a" stroke-width="1.5" opacity="0.6"/>
-            <!-- connections l2-l3 -->
             <line x1="216" y1="80"  x2="284" y2="90"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="216" y1="80"  x2="284" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="216" y1="135" x2="284" y2="90"  stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="216" y1="135" x2="284" y2="135" stroke="#1a6bc8" stroke-width="1.5" opacity="0.6"/>
             <line x1="216" y1="190" x2="284" y2="135" stroke="#f5f2ec" stroke-width="0.8" opacity="0.2"/>
             <line x1="216" y1="190" x2="284" y2="180" stroke="#1a6bc8" stroke-width="1.5" opacity="0.6"/>
-            <!-- connections l3-out -->
             <line x1="316" y1="90"  x2="372" y2="135" stroke="#1a6bc8" stroke-width="1.2" opacity="0.4"/>
             <line x1="316" y1="135" x2="372" y2="135" stroke="#1a6bc8" stroke-width="2"   opacity="0.8"/>
             <line x1="316" y1="180" x2="372" y2="135" stroke="#1a6bc8" stroke-width="1.2" opacity="0.4"/>
-            <!-- output label -->
             <text x="390" y="139" text-anchor="middle" font-size="10" fill="#f5f2ec" font-family="monospace" font-weight="bold">0.87</text>
             <text x="240" y="248" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">CHURN PREDICTION ANN</text>
           </svg>
           <div class="project-overlay">
             <div class="overlay-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span class="overlay-text">View on GitHub</span>
           </div>
@@ -761,17 +700,10 @@
         <div class="project-body">
           <div class="project-tag">Deep Learning · Classification</div>
           <div class="project-name">Customer Churn ANN</div>
-          <p class="project-desc">
-            Artificial neural network model to predict bank customer churn.
-            Demographic segmentation with Keras/TensorFlow, gradient descent optimization.
-          </p>
-          <a class="project-link"
-             href="https://github.com/Zukisa313/CHURN-ANN"
-             target="_blank" rel="noopener">
+          <p class="project-desc">Artificial neural network model to predict bank customer churn. Demographic segmentation with Keras/TensorFlow, gradient descent optimization.</p>
+          <a class="project-link" href="https://github.com/Zukisa313/CHURN-ANN" target="_blank" rel="noopener">
             GitHub Repo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </article>
@@ -780,52 +712,36 @@
       <article class="project-card reveal">
         <a class="project-img-wrap"
            href="https://github.com/Zukisa313/Cat-Dog-Classification"
-           target="_blank" rel="noopener" title="View on GitHub">
-          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
             <rect width="480" height="270" fill="#0e0e10"/>
-            <!-- left panel: cat silhouette abstract -->
             <rect x="30" y="40" width="190" height="190" rx="6" fill="#161618"/>
-            <!-- cat shape simplified -->
             <ellipse cx="125" cy="160" rx="52" ry="42" fill="#c8501a" opacity="0.7"/>
             <ellipse cx="125" cy="130" rx="32" ry="30" fill="#c8501a" opacity="0.8"/>
-            <!-- ears -->
             <polygon points="100,112 90,85 115,105" fill="#c8501a" opacity="0.9"/>
             <polygon points="150,112 160,85 135,105" fill="#c8501a" opacity="0.9"/>
-            <!-- eyes -->
             <ellipse cx="114" cy="125" rx="6" ry="7" fill="#0e0e10"/>
             <ellipse cx="136" cy="125" rx="6" ry="7" fill="#0e0e10"/>
             <circle cx="114" cy="125" r="3" fill="#f5f2ec"/>
             <circle cx="136" cy="125" r="3" fill="#f5f2ec"/>
             <text x="125" y="242" text-anchor="middle" font-size="9" fill="#c8501a" font-family="monospace" letter-spacing="1">CAT 94.2%</text>
-
-            <!-- right panel: dog silhouette abstract -->
             <rect x="260" y="40" width="190" height="190" rx="6" fill="#161618"/>
-            <!-- dog shape -->
             <ellipse cx="355" cy="160" rx="52" ry="42" fill="#1a6bc8" opacity="0.7"/>
             <ellipse cx="355" cy="128" rx="35" ry="30" fill="#1a6bc8" opacity="0.8"/>
-            <!-- floppy ears -->
             <ellipse cx="323" cy="130" rx="14" ry="24" fill="#1a6bc8" opacity="0.6" transform="rotate(-8,323,130)"/>
             <ellipse cx="387" cy="130" rx="14" ry="24" fill="#1a6bc8" opacity="0.6" transform="rotate(8,387,130)"/>
-            <!-- eyes -->
             <ellipse cx="344" cy="122" rx="6" ry="7" fill="#0e0e10"/>
             <ellipse cx="366" cy="122" rx="6" ry="7" fill="#0e0e10"/>
             <circle cx="344" cy="122" r="3" fill="#f5f2ec"/>
             <circle cx="366" cy="122" r="3" fill="#f5f2ec"/>
-            <!-- nose -->
             <ellipse cx="355" cy="138" rx="8" ry="5" fill="#0e0e10" opacity="0.6"/>
             <text x="355" y="242" text-anchor="middle" font-size="9" fill="#1a6bc8" font-family="monospace" letter-spacing="1">DOG 5.8%</text>
-
-            <!-- CNN label -->
             <text x="240" y="258" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">CNN CLASSIFIER</text>
-
-            <!-- vs -->
             <text x="240" y="145" text-anchor="middle" font-size="16" fill="#f5f2ec" font-family="monospace" font-weight="bold" opacity="0.4">VS</text>
           </svg>
           <div class="project-overlay">
             <div class="overlay-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span class="overlay-text">View on GitHub</span>
           </div>
@@ -833,17 +749,10 @@
         <div class="project-body">
           <div class="project-tag">Computer Vision · CNN</div>
           <div class="project-name">Cat vs Dog Classification</div>
-          <p class="project-desc">
-            Convolutional neural network for binary image classification. Trained on
-            pet image datasets using pooling layers, dropout, and data augmentation.
-          </p>
-          <a class="project-link"
-             href="https://github.com/Zukisa313/Cat-Dog-Classification"
-             target="_blank" rel="noopener">
+          <p class="project-desc">Convolutional neural network for binary image classification. Trained on pet image datasets using pooling layers, dropout, and data augmentation.</p>
+          <a class="project-link" href="https://github.com/Zukisa313/Cat-Dog-Classification" target="_blank" rel="noopener">
             GitHub Repo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </article>
@@ -852,10 +761,9 @@
       <article class="project-card reveal">
         <a class="project-img-wrap"
            href="https://github.com/Zukisa313/Machine-Learning-Techniques"
-           target="_blank" rel="noopener" title="View on GitHub">
-          <svg class="thumb-svg" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
             <rect width="480" height="270" fill="#0e0e10"/>
-            <!-- scatter plot points -->
             <circle cx="120" cy="180" r="6" fill="#c8501a" opacity="0.9"/>
             <circle cx="145" cy="160" r="6" fill="#c8501a" opacity="0.9"/>
             <circle cx="135" cy="145" r="6" fill="#c8501a" opacity="0.9"/>
@@ -863,7 +771,6 @@
             <circle cx="155" cy="150" r="6" fill="#c8501a" opacity="0.9"/>
             <circle cx="180" cy="140" r="6" fill="#c8501a" opacity="0.9"/>
             <circle cx="170" cy="165" r="5" fill="#c8501a" opacity="0.7"/>
-
             <circle cx="280" cy="100" r="6" fill="#1a6bc8" opacity="0.9"/>
             <circle cx="310" cy="85"  r="6" fill="#1a6bc8" opacity="0.9"/>
             <circle cx="295" cy="110" r="6" fill="#1a6bc8" opacity="0.9"/>
@@ -871,31 +778,20 @@
             <circle cx="315" cy="75"  r="6" fill="#1a6bc8" opacity="0.9"/>
             <circle cx="345" cy="100" r="6" fill="#1a6bc8" opacity="0.9"/>
             <circle cx="300" cy="120" r="5" fill="#1a6bc8" opacity="0.7"/>
-
-            <!-- mixed middle -->
             <circle cx="220" cy="130" r="5" fill="#c8501a" opacity="0.5"/>
             <circle cx="235" cy="145" r="5" fill="#1a6bc8" opacity="0.5"/>
             <circle cx="245" cy="120" r="5" fill="#c8501a" opacity="0.5"/>
             <circle cx="210" cy="155" r="5" fill="#1a6bc8" opacity="0.5"/>
-
-            <!-- decision boundary -->
             <line x1="60" y1="210" x2="420" y2="55" stroke="#f5f2ec" stroke-width="1.5" stroke-dasharray="8,5" opacity="0.35"/>
-
-            <!-- axes -->
             <line x1="60" y1="220" x2="420" y2="220" stroke="#f5f2ec" stroke-width="1" opacity="0.2"/>
             <line x1="60" y1="40"  x2="60"  y2="220" stroke="#f5f2ec" stroke-width="1" opacity="0.2"/>
-
-            <!-- SVM boundary label -->
             <rect x="360" y="55" width="72" height="18" rx="3" fill="#c8501a" opacity="0.85"/>
             <text x="396" y="68" text-anchor="middle" font-size="9" fill="#f5f2ec" font-family="monospace">Decision Bdry</text>
-
             <text x="240" y="252" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">ML TECHNIQUES</text>
           </svg>
           <div class="project-overlay">
             <div class="overlay-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span class="overlay-text">View on GitHub</span>
           </div>
@@ -903,17 +799,61 @@
         <div class="project-body">
           <div class="project-tag">Machine Learning · Algorithms</div>
           <div class="project-name">Machine Learning Techniques</div>
-          <p class="project-desc">
-            A collection of fundamental ML algorithms implemented from scratch and applied
-            to real datasets — covering supervised, unsupervised, and ensemble methods.
-          </p>
-          <a class="project-link"
-             href="https://github.com/Zukisa313/Machine-Learning-Techniques"
-             target="_blank" rel="noopener">
+          <p class="project-desc">A collection of fundamental ML algorithms implemented from scratch and applied to real datasets — covering supervised, unsupervised, and ensemble methods.</p>
+          <a class="project-link" href="https://github.com/Zukisa313/Machine-Learning-Techniques" target="_blank" rel="noopener">
             GitHub Repo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 5: Scene Classification ── NEW -->
+      <article class="project-card reveal">
+        <a class="project-img-wrap"
+           href="https://github.com/Zukisa313/Scene-Classification"
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="270" fill="#0e0e10"/>
+            <!-- sky gradient simulation -->
+            <rect x="30" y="35" width="420" height="200" rx="6" fill="#0d1a2e"/>
+            <!-- mountains silhouette -->
+            <polygon points="30,235 110,120 190,180 260,95 340,160 420,105 450,235" fill="#1a2a3a"/>
+            <!-- ground -->
+            <rect x="30" y="210" width="420" height="25" rx="0" fill="#0f1f10"/>
+            <!-- sun / horizon glow -->
+            <ellipse cx="260" cy="108" rx="90" ry="30" fill="#c8501a" opacity="0.18"/>
+            <circle cx="260" cy="95" r="18" fill="#c8501a" opacity="0.75"/>
+            <!-- label tiles representing scene classes -->
+            <rect x="42" y="42" width="72" height="22" rx="4" fill="#c8501a" opacity="0.85"/>
+            <text x="78" y="57" text-anchor="middle" font-size="8" fill="#f5f2ec" font-family="monospace" letter-spacing="0.5">mountain</text>
+            <rect x="124" y="42" width="60" height="22" rx="4" fill="#1a6bc8" opacity="0.8"/>
+            <text x="154" y="57" text-anchor="middle" font-size="8" fill="#f5f2ec" font-family="monospace" letter-spacing="0.5">forest</text>
+            <rect x="194" y="42" width="56" height="22" rx="4" fill="#2a7a3a" opacity="0.8"/>
+            <text x="222" y="57" text-anchor="middle" font-size="8" fill="#f5f2ec" font-family="monospace" letter-spacing="0.5">street</text>
+            <rect x="260" y="42" width="52" height="22" rx="4" fill="#7a501a" opacity="0.8"/>
+            <text x="286" y="57" text-anchor="middle" font-size="8" fill="#f5f2ec" font-family="monospace" letter-spacing="0.5">coast</text>
+            <rect x="322" y="42" width="60" height="22" rx="4" fill="#5a1a7a" opacity="0.8"/>
+            <text x="352" y="57" text-anchor="middle" font-size="8" fill="#f5f2ec" font-family="monospace" letter-spacing="0.5">building</text>
+            <!-- confidence bar -->
+            <rect x="42" y="200" width="380" height="8" rx="4" fill="rgba(245,242,236,0.08)"/>
+            <rect x="42" y="200" width="298" height="8" rx="4" fill="#c8501a" opacity="0.85"/>
+            <text x="350" y="209" font-size="9" fill="#c8501a" font-family="monospace" font-weight="bold">78.5%</text>
+            <text x="240" y="248" text-anchor="middle" font-size="11" fill="#7a7068" font-family="monospace" letter-spacing="2">SCENE CLASSIFICATION</text>
+          </svg>
+          <div class="project-overlay">
+            <div class="overlay-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="overlay-text">View on GitHub</span>
+          </div>
+        </a>
+        <div class="project-body">
+          <div class="project-tag">Computer Vision · Multi-Class</div>
+          <div class="project-name">Scene Classification</div>
+          <p class="project-desc">Deep learning model to classify natural and urban scenes across multiple categories — mountains, forests, streets, coasts, and buildings — using CNN architectures.</p>
+          <a class="project-link" href="https://github.com/Zukisa313/Scene-Classification" target="_blank" rel="noopener">
+            GitHub Repo
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </article>
@@ -927,7 +867,6 @@
 </footer>
 
 <script>
-  // Intersection Observer for reveal animations
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
